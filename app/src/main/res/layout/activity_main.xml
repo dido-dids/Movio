@@ -34,6 +34,7 @@
 
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/movie_grid_view"
               android:background="?colorAccent"
               android:numColumns="auto_fit"
               android:gravity="center"
@@ -42,6 +43,12 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent" >
     </GridView>
+
+    <ViewStub
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/empty_view"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
