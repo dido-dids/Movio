@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.service.voice.VoiceInteractionService;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-//        R.layout.activity_main
-
         setContentView(R.layout.activity_main);
 
         FilmAdapter adapter = new FilmAdapter(this, R.layout.grid_view_row, mMovies);
@@ -36,12 +31,16 @@ public class MainActivity extends AppCompatActivity {
         TextView emptyText = (TextView) findViewById(R.id.empty_text);
         gridView.setEmptyView(emptyText);
 
-        if (hasConnection()) {
+        if (isNetworkAvailable()) {
             initMovies();
+            if (mMovies.isEmpty()) {
+                emptyText.setText("žádná data");
+            }
+        } else {
+            emptyText.setText("žádné připojení");
         }
-        else{
-            emptyText.setText("zadne data/pripojeni");
-        }
+
+
 
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -50,32 +49,51 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, MovieDetailActivity.class));
             }
         });
-        //pre istotu :D
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+                Toast.makeText(MainActivity.this, (CharSequence) mMovies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        //pre istotu
         adapter.notifyDataSetChanged();
-        Log.v("image", adapter.getItem(0).getCoverPath());
 
     }
 
-    private boolean hasConnection() {
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getActiveNetworkInfo();
-        if (ni == null) {
-            // There are no active networks.
-            return false;
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void initMovies() {
+
+        String[] covers = {
+                "http://image.tmdb.org/t/p/w185/jjBgi2r5cRt36xF6iNUEhzscEcb.jpg",
+                "http://image.tmdb.org/t/p/w185/AjbENYG3b8lhYSkdrWwlhVLRPKR.jpg",
+                "http://image.tmdb.org/t/p/w185/kqjL17yufvn9OVLyXYpvtyrFfak.jpg",
+                "https://image.tmdb.org/t/p/w185/aAmfIX3TT40zUHGcCKrlOZRKC7u.jpg",
+                "https://image.tmdb.org/t/p/w185/5JU9ytZJyR3zmClGmVm9q4Geqbd.jpg",
+                "https://image.tmdb.org/t/p/w185/q0R4crx2SehcEEQEkYObktdeFy.jpg",
+                "https://image.tmdb.org/t/p/w185/qey0tdcOp9kCDdEZuJ87yE3crSe.jpg",
+                "https://image.tmdb.org/t/p/w185/ktyVmIqfoaJ8w0gDSZyjhhOPpD6.jpg",
+                "https://image.tmdb.org/t/p/w185/b0f5Thd0IVYVUcteQAtcnwdta0c.jpg",
+                "https://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg",
+                "https://image.tmdb.org/t/p/w185/t4PLWexbe4wbNydCOBv18cYexup.jpg",
+                "https://image.tmdb.org/t/p/w185/7SGGUiTE6oc2fh9MjIk5M00dsQd.jpg",
+                "https://image.tmdb.org/t/p/w185/t90Y3G8UGQp0f0DrP60wRu9gfrH.jpg",
+                "https://image.tmdb.org/t/p/w185/vlTPQANjLYTebzFJM1G4KeON0cb.jpg",
+                "https://image.tmdb.org/t/p/w185/z3nGs7UED9XlqUkgWeT4jQ80m1N.jpg"
+        };
+
+        for (int i = 0; i < covers.length; i++) {
+            mMovies.add(i, new Film(123, covers[i], "title" + i));
         }
-        return ni.isConnected();
     }
 
-    public void initMovies(){
-        Film film1 = new Film(1, "http://image.tmdb.org/t/p/w185/jjBgi2r5cRt36xF6iNUEhzscEcb.jpg", "title1");
-        Film film2 = new Film(2, "http://image.tmdb.org/t/p/w185/AjbENYG3b8lhYSkdrWwlhVLRPKR.jpg", "title2");
-        Film film3 = new Film(3, "http://image.tmdb.org/t/p/w185/kqjL17yufvn9OVLyXYpvtyrFfak.jpg", "title3");
-
-        mMovies.add(film1);
-        mMovies.add(film2);
-        mMovies.add(film3);
-    }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -96,5 +114,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }
