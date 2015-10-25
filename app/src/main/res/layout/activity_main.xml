@@ -7,6 +7,13 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container"
+        android:name="cz.muni.fi.pv256.movio.uco373993.FilmListFragment"/>
+
+
     <!--
         <android.support.design.widget.AppBarLayout
             android:layout_height="wrap_content"
@@ -23,7 +30,7 @@
         </android.support.design.widget.AppBarLayout>
     -->
 
-    <include layout="@layout/content_main"/>
+    <!--<include layout="@layout/content_main"/>-->
 
     <!--
     <android.support.design.widget.FloatingActionButton
@@ -36,22 +43,7 @@
     -->
 
 
-    <GridView
-        android:id="@+id/movie_grid_view"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="?colorAccent"
-        android:gravity="center"
-        android:numColumns="3"
-        android:stretchMode="columnWidth">
-    </GridView>
 
-    <ViewStub
-        android:id="@+id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout="@layout/empty_view"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
