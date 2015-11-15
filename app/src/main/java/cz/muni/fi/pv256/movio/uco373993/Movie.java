@@ -6,13 +6,13 @@ import android.os.Parcelable;
 /**
  * Created by David Boron on 15.10.2015.
  */
-public class Film implements Parcelable {
+public class Movie implements Parcelable {
 
     private long mReleaseDate;
     private String mCoverPath;
     private String mTitle;
 
-    public Film(long releaseDate, String coverPath, String title) {
+    public Movie(long releaseDate, String coverPath, String title) {
         this.mReleaseDate = releaseDate;
         this.mCoverPath = coverPath;
         this.mTitle = title;
@@ -55,19 +55,19 @@ public class Film implements Parcelable {
         dest.writeString(this.mTitle);
     }
 
-    protected Film(Parcel in) {
+    protected Movie(Parcel in) {
         this.mReleaseDate = in.readLong();
         this.mCoverPath = in.readString();
         this.mTitle = in.readString();
     }
 
-    public static final Parcelable.Creator<Film> CREATOR = new Parcelable.Creator<Film>() {
-        public Film createFromParcel(Parcel source) {
-            return new Film(source);
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
         }
 
-        public Film[] newArray(int size) {
-            return new Film[size];
+        public Movie[] newArray(int size) {
+            return new Movie[size];
         }
     };
 }

@@ -15,11 +15,11 @@ import java.util.List;
 /**
  * Created by David Boron on 16.10.2015.
  */
-public class FilmAdapter extends ArrayAdapter<Film> {
+public class MovieAdapter extends ArrayAdapter<Movie> {
     private Context mContext;
     private int mLayoutResourceid;
 
-    public FilmAdapter(Context context, int resource, List<Film> objects) {
+    public MovieAdapter(Context context, int resource, List<Movie> objects) {
         super(context, resource, objects);
         mContext = context;
         mLayoutResourceid = resource;
