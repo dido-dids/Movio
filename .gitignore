@@ -49,3 +49,5 @@ out/
 crashlytics.properties
 crashlytics-build.properties
 com_crashlytics_export_strings.xml
+
+my-release-key.keystore
