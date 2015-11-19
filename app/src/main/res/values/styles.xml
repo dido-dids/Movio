@@ -1,16 +1,15 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">#303F9F</item>
-        <item name="colorAccent">#4CAF50</item>
-    </style>
-
-
-    <style name="AppTheme.MyTheme2">
         <item name="colorPrimary">#795548</item>
         <item name="colorPrimaryDark">#5D4037</item>
         <item name="colorAccent">#A2BFC8</item>
+    </style>
+
+    <style name="AppTheme.MyTheme2">
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">#303F9F</item>
+        <item name="colorAccent">#4CAF50</item>
     </style>
 
 </resources>

@@ -31,24 +31,24 @@ android {
         release {
             minifyEnabled false
             signingConfig signingConfigs.release
-            resValue "string", "app_name", "Movio"
             defaultConfig.resConfigs "sk", "en"
         }
         debug {
             applicationIdSuffix '.debug'
-            versionNameSuffix ".${versionBuild}-DEBUG"
-            resValue "string", "app_name", "Movio (debug)"
+            versionNameSuffix ".${versionBuild}-Debug"
         }
     }
 
     productFlavors {
         primary {
             buildConfigField "boolean", "logging", "true"
+            resValue "string", "app_name", "Movio"
         }
 
         secondary {
-            applicationId "cz.muni.fi.pv256.movio.uco373993.Theme2"
+            applicationId "cz.muni.fi.pv256.movio.uco373993.secondary"
             buildConfigField "boolean", "logging", "false"
+            resValue "string", "app_name", "Movio (secondary)"
         }
     }
 
