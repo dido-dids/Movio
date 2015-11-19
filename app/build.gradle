@@ -13,17 +13,9 @@ android {
         applicationId "cz.muni.fi.pv256.movio.uco373993"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-        resConfigs "cs", "en"
-    }
-
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = new File(
-                    output.outputFile.parent,
-                    "$project.name-$variant.name-$variant.versionName-${variant.versionCode}.apk")
-        }
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        resConfigs "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
     }
 
     signingConfigs {
@@ -35,35 +27,28 @@ android {
         }
     }
 
-    productFlavors {
-        primary {
-        }
-
-        secondary {
-            applicationId "cz.muni.fi.pv256.movio.uco373993.secondary"
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-
-
     buildTypes {
         release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             minifyEnabled false
             signingConfig signingConfigs.release
-            defaultConfig.versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+            resValue "string", "app_name", "Movio"
             defaultConfig.resConfigs "sk", "en"
-            buildConfigField "boolean", "logging", "false"
         }
         debug {
             applicationIdSuffix '.debug'
+            versionNameSuffix ".${versionBuild}-DEBUG"
+            resValue "string", "app_name", "Movio (debug)"
+        }
+    }
+
+    productFlavors {
+        primary {
             buildConfigField "boolean", "logging", "true"
-            defaultConfig.versionName
-            "${versionMajor}:${versionMinor}:${versionPatch}:${versionBuild}:${defaultConfig.versionCode}"
+        }
+
+        secondary {
+            applicationId "cz.muni.fi.pv256.movio.uco373993.Theme2"
+            buildConfigField "boolean", "logging", "false"
         }
     }
 
@@ -72,8 +57,10 @@ android {
         textOutput 'stdout'
     }
 
-
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
@@ -81,6 +68,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
-    //compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
 }
