@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements MovieListFragment.Callback {
 
-    private boolean mTwoPanel;
+    private boolean mTwoPanels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,15 +14,15 @@ public class MainActivity extends AppCompatActivity implements MovieListFragment
         setContentView(R.layout.activity_main);
 
         if (findViewById(R.id.detail) != null) {
-            mTwoPanel = true;
+            mTwoPanels = true;
         } else {
-            mTwoPanel = false;
+            mTwoPanels = false;
         }
     }
 
     @Override
     public void onItemClick(Movie movie) {
-        if (mTwoPanel) {
+        if (mTwoPanels) {
             MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelable("Movie", movie);

@@ -1,6 +1,5 @@
 package cz.muni.fi.pv256.movio.uco373993;
 
-
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -9,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
 import java.util.ArrayList;
@@ -34,8 +31,7 @@ public class MovieListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
         MovieAdapter adapter = new MovieAdapter(getActivity(), R.layout.grid_view_row, mMovies);
         StickyGridHeadersGridView gridView = (StickyGridHeadersGridView) view.findViewById(R.id.movie_grid_view);
@@ -52,7 +48,6 @@ public class MovieListFragment extends Fragment {
         } else {
             emptyText.setText("žádné připojení");
         }
-
 
 
         gridView.setAdapter(adapter);
