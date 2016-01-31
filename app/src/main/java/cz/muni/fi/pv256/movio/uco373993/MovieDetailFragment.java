@@ -32,7 +32,7 @@ public class MovieDetailFragment extends Fragment {
             title.setText("" + movie.getTitle());
 
             ImageView cover = (ImageView) view.findViewById(R.id.cover);
-            Picasso.with(getActivity()).load(movie.getCoverPath()).into(cover);
+            Picasso.with(getActivity()).load("http://image.tmdb.org/t/p/original" + movie.getCoverPath()).into(cover);
         }
         return view;
     }

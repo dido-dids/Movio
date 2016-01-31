@@ -3,35 +3,63 @@ package cz.muni.fi.pv256.movio.uco373993;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by David Boron on 15.10.2015.
  */
 public class Movie implements Parcelable {
 
-    private long mReleaseDate;
+
+    @SerializedName("backdrop_path")
+    private String mBackdropPath;
+    @SerializedName("id")
+    private long id;
+    @SerializedName("release_date")
+    private String mReleaseDate;
+    @SerializedName("poster_path")
     private String mCoverPath;
+    @SerializedName("title")
     private String mTitle;
 
-    public Movie(long releaseDate, String coverPath, String title) {
+    public Movie(){
+    }
+
+    public Movie(String releaseDate, String coverPath, String title) {
         this.mReleaseDate = releaseDate;
         this.mCoverPath = coverPath;
         this.mTitle = title;
     }
 
-    public void setReleaseDate(long releaseDate) {
-        this.mReleaseDate = releaseDate;
+    public String getBackdropPath() {
+        return mBackdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        mBackdropPath = backdropPath;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        mReleaseDate = releaseDate;
     }
 
     public void setCoverPath(String coverPath) {
-        this.mCoverPath = coverPath;
+        mCoverPath = coverPath;
     }
 
     public void setTitle(String title) {
-        this.mTitle = title;
+        mTitle = title;
     }
 
-    public long getReleaseDate() {
-
+    public String getReleaseDate() {
         return mReleaseDate;
     }
 
@@ -50,14 +78,18 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.mReleaseDate);
+        dest.writeLong(this.id);
+        dest.writeString(this.mReleaseDate);
         dest.writeString(this.mCoverPath);
+        dest.writeString(this.mBackdropPath);
         dest.writeString(this.mTitle);
     }
 
     protected Movie(Parcel in) {
-        this.mReleaseDate = in.readLong();
+        this.id = in.readLong();
+        this.mReleaseDate = in.readString();
         this.mCoverPath = in.readString();
+        this.mBackdropPath = in.readString();
         this.mTitle = in.readString();
     }
 

@@ -2,19 +2,27 @@ package cz.muni.fi.pv256.movio.uco373993;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.Response;
 
 
 /**
@@ -22,50 +30,123 @@ import java.util.List;
  */
 public class MovieListFragment extends Fragment {
 
-    List<Movie> mMovies = new ArrayList<>(20);
+    public List<Movie> mMovies = new ArrayList<>(20);
     private Callback mCallback;
+    private StickyGridHeadersGridView mGridView;
+    private AsyncDownloadTask mAsyncTask;
 
     public MovieListFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
-        MovieAdapter adapter = new MovieAdapter(getActivity(), R.layout.grid_view_row, mMovies);
-        StickyGridHeadersGridView gridView = (StickyGridHeadersGridView) view.findViewById(R.id.movie_grid_view);
-        gridView.setEmptyView(view.findViewById(R.id.empty));
+        mGridView = (StickyGridHeadersGridView) view.findViewById(R.id.movie_grid_view);
+
+        ViewStub emptyView = (ViewStub) view.findViewById(R.id.empty);
+        mGridView.setEmptyView(emptyView);
 
         TextView emptyText = (TextView) view.findViewById(R.id.empty_text);
-        gridView.setEmptyView(emptyText);
 
         if (isNetworkAvailable()) {
-            initMovies();
+//            initMovies();
             if (mMovies.isEmpty()) {
-                emptyText.setText("žádná data");
+                emptyText.setText(R.string.no_data);
             }
         } else {
-            emptyText.setText("žádné připojení");
+            emptyText.setText(R.string.no_connection);
         }
 
+        MovieAdapter movieAdapter = new MovieAdapter(getActivity(), R.layout.grid_view_row, mMovies);
+        mGridView.setAdapter(movieAdapter);
 
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((Callback) getActivity()).onItemClick(mMovies.get(position));
+                ((Callback) getActivity()).onItemClick((Movie) mGridView.getItemAtPosition(position));
             }
         });
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
             public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(getActivity(), mMovies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                String title = ((Movie) mGridView.getItemAtPosition(position)).getTitle();
+                Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
         return view;
     }
 
+    @Override
+    public void onStart() {
+
+        super.onStart();
+
+        if (MovieLoader.getInstance().hasData()) {
+            mGridView.setAdapter(new MovieAdapter(getActivity(), R.layout.grid_view_row, MovieLoader.getInstance().getMovies()));
+        } else {
+            if (mAsyncTask != null) {
+                mAsyncTask.cancel(true);
+            }
+            mAsyncTask = new AsyncDownloadTask();
+            mAsyncTask.execute();
+        }
+    }
+
+    @Override
+    public void onStop() {
+
+        super.onStop();
+
+        if (mAsyncTask != null) {
+            mAsyncTask.cancel(true);
+            mAsyncTask = null;
+        }
+    }
+
+    private class AsyncDownloadTask extends AsyncTask<Void, Void, Boolean> {
+
+        private Gson mGson = new Gson();
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            final MovieLoader movieLoader = MovieLoader.getInstance();
+            Response response = movieLoader.loadMovies();
+
+            if (response != null) {
+                if (response.isSuccessful()) {
+
+                    try {
+                        final MovieDataObject MovieDataObject = mGson.fromJson(response.body().charStream(), MovieDataObject.class);
+                        response.body().close();
+
+                        MovieLoader.getInstance().addFilms(Arrays.asList(MovieDataObject.getResults()));
+                        return Boolean.TRUE;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+            return Boolean.FALSE;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+
+            if (null != result && result) {
+                mGridView.setAdapter(new MovieAdapter(getActivity(), R.layout.grid_view_row, MovieLoader.getInstance().getMovies()));
+//                mGvwMovies.setAdapter(new FilmAdapter(getActivity(), DataLoader.getInstance().getFilms(), R.layout.list_item_film_header, R.layout.item_film));
+            }
+        }
+
+    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -74,6 +155,7 @@ public class MovieListFragment extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    /*
     public void initMovies() {
 
         String[] covers = {
@@ -109,9 +191,11 @@ public class MovieListFragment extends Fragment {
         };
 
         for (int i = 0; i < covers.length; i++) {
-            mMovies.add(i, new Movie(123, covers[i], "title" + i));
+//            mMovies.add(i, new Movie(123, covers[i], "title" + i));
+            mMovies.add(i, new Movie());
         }
     }
+    */
 
     public interface Callback {
         void onItemClick(Movie movie);

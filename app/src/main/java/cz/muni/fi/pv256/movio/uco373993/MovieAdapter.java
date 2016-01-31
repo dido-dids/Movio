@@ -16,6 +16,7 @@ import java.util.List;
  * Created by David Boron on 16.10.2015.
  */
 public class MovieAdapter extends ArrayAdapter<Movie> {
+
     private Context mContext;
     private int mLayoutResourceid;
 
@@ -27,25 +28,38 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ViewHolder viewHolder;
+
+        Movie movie = getItem(position);
+
         if (convertView == null) {
             convertView = ((Activity) mContext).getLayoutInflater().inflate(mLayoutResourceid, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.mImageView = (ImageView) convertView.findViewById(R.id.row);
             convertView.setTag(viewHolder);
-            Log.i("adapter","inflate radku "+ position);
-        } else {
+            Log.i("adapter", "inflate radku " + position);
+            Log.i("movie","movie: "+ movie.getTitle());
+        }
+        else {
             viewHolder = (ViewHolder) convertView.getTag();
             Log.i("adapter","recyklace radku "+ position);
         }
 
+//        Log.d("MovieAdapter", "Loading poster for " + movie.getTitle() + ".");
+//        Log.d("MovieAdapter", "http://image.tmdb.org/t/p/original" + movie.getCoverPath());
+//        Picasso.with(mContext).load(getItem(position).getCoverPath()).into(viewHolder.mImageView);
+        Picasso.with(mContext).load("http://image.tmdb.org/t/p/original" + movie.getCoverPath())
+                .fit()
+                .centerCrop()
+                .into(viewHolder.mImageView);
 
-
-        Picasso.with(mContext).load(getItem(position).getCoverPath()).into(viewHolder.mImageView);
         return convertView;
     }
 
     private static class ViewHolder {
         ImageView mImageView;
     }
+
+
 }

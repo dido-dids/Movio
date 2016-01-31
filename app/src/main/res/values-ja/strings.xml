@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">zxczxca</string>
+    <string name="no_data">No data</string>
+    <string name="no_connection">No connection</string>
 </resources>
