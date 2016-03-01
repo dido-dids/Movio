@@ -4,6 +4,18 @@
               android:orientation="vertical"
     >
 
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/section_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="@string/section_label_popular"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="16dp"
+        />
+
     <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
         android:id="@+id/movie_grid_view"
         xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,4 +1,4 @@
-package cz.muni.fi.pv256.movio.uco373993;
+package cz.muni.fi.pv256.movio.uco373993.model;
 
 import android.util.Log;
 
@@ -16,6 +16,7 @@ public class MovieDataObject {
     }
 
     public Movie[] getResults() {
+        Log.d("MovieDataObject", "getResults() called");
         return mResults;
     }
 

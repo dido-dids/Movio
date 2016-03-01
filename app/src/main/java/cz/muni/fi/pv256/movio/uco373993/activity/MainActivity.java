@@ -1,8 +1,13 @@
-package cz.muni.fi.pv256.movio.uco373993;
+package cz.muni.fi.pv256.movio.uco373993.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import cz.muni.fi.pv256.movio.uco373993.model.Movie;
+import cz.muni.fi.pv256.movio.uco373993.R;
+import cz.muni.fi.pv256.movio.uco373993.fragment.MovieDetailFragment;
+import cz.muni.fi.pv256.movio.uco373993.fragment.MovieListFragment;
 
 public class MainActivity extends AppCompatActivity implements MovieListFragment.Callback {
 

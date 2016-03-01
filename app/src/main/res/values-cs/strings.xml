@@ -3,4 +3,7 @@
     <string name="action_settings">Nastavenia</string>
     <string name="no_data">Žádna data</string>
     <string name="no_connection">Žádne připojení</string>
+    <string name="notification_error_title">Chyba stahování</string>
+    <string name="notification_error_text">Filmy nešlo stáhnout</string>
+    <string name="section_label_popular">Populárni filmy</string>
 </resources>

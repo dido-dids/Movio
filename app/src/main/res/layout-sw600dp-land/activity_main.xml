@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/container"
-        android:name="cz.muni.fi.pv256.movio.uco373993.MovieListFragment"
+        android:name="cz.muni.fi.pv256.movio.uco373993.fragment.MovieListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight=".5"

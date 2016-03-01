@@ -12,6 +12,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import cz.muni.fi.pv256.movio.uco373993.model.Movie;
+import cz.muni.fi.pv256.movio.uco373993.service.TheMovieDBApi;
+
 /**
  * Created by David Boron on 16.10.2015.
  */
@@ -30,7 +33,6 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder;
-
         Movie movie = getItem(position);
 
         if (convertView == null) {
@@ -46,10 +48,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             Log.i("adapter","recyklace radku "+ position);
         }
 
-//        Log.d("MovieAdapter", "Loading poster for " + movie.getTitle() + ".");
-//        Log.d("MovieAdapter", "http://image.tmdb.org/t/p/original" + movie.getCoverPath());
-//        Picasso.with(mContext).load(getItem(position).getCoverPath()).into(viewHolder.mImageView);
-        Picasso.with(mContext).load("http://image.tmdb.org/t/p/original" + movie.getCoverPath())
+        Picasso.with(mContext).load(TheMovieDBApi.IMAGES_URL + movie.getCoverPath())
                 .fit()
                 .centerCrop()
                 .into(viewHolder.mImageView);

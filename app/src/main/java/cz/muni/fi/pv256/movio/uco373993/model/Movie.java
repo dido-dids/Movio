@@ -1,4 +1,4 @@
-package cz.muni.fi.pv256.movio.uco373993;
+package cz.muni.fi.pv256.movio.uco373993.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

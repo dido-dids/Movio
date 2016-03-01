@@ -3,4 +3,7 @@
     <string name="action_settings">zxczxca</string>
     <string name="no_data">No data</string>
     <string name="no_connection">No connection</string>
+    <string name="notification_error_title">Download error</string>
+    <string name="notification_error_text">Movies couldn\'t be downloaded.</string>
+    <string name="section_label_popular">Popular</string>
 </resources>
