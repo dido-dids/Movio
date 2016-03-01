@@ -1,9 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context=".activity.MainActivity">
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
+      tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/update_wheel"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/update"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/favoriteSwitcher"
+        android:title="@string/favorites"
+        app:actionLayout="@layout/toolbar_switcher"
+        app:showAsAction="always"/>
+
 </menu>

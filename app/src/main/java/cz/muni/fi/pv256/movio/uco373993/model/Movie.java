@@ -5,12 +5,25 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by David Boron on 15.10.2015.
  */
 public class Movie implements Parcelable {
 
 
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
     @SerializedName("backdrop_path")
     private String mBackdropPath;
     @SerializedName("id")
@@ -22,13 +35,21 @@ public class Movie implements Parcelable {
     @SerializedName("title")
     private String mTitle;
 
-    public Movie(){
+    public Movie() {
     }
 
     public Movie(String releaseDate, String coverPath, String title) {
         this.mReleaseDate = releaseDate;
         this.mCoverPath = coverPath;
         this.mTitle = title;
+    }
+
+    protected Movie(Parcel in) {
+        this.id = in.readLong();
+        this.mReleaseDate = in.readString();
+        this.mCoverPath = in.readString();
+        this.mBackdropPath = in.readString();
+        this.mTitle = in.readString();
     }
 
     public String getBackdropPath() {
@@ -47,28 +68,39 @@ public class Movie implements Parcelable {
         this.id = id;
     }
 
+    public String getReleaseDate() {
+
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = fmt.parse(mReleaseDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        SimpleDateFormat fmtOut = new SimpleDateFormat("dd.MM.yyyy");
+        return fmtOut.format(date);
+    }
+
     public void setReleaseDate(String releaseDate) {
         mReleaseDate = releaseDate;
-    }
-
-    public void setCoverPath(String coverPath) {
-        mCoverPath = coverPath;
-    }
-
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
-    public String getReleaseDate() {
-        return mReleaseDate;
     }
 
     public String getCoverPath() {
         return mCoverPath;
     }
 
+    public void setCoverPath(String coverPath) {
+        mCoverPath = coverPath;
+    }
+
     public String getTitle() {
         return mTitle;
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
     }
 
     @Override
@@ -84,22 +116,4 @@ public class Movie implements Parcelable {
         dest.writeString(this.mBackdropPath);
         dest.writeString(this.mTitle);
     }
-
-    protected Movie(Parcel in) {
-        this.id = in.readLong();
-        this.mReleaseDate = in.readString();
-        this.mCoverPath = in.readString();
-        this.mBackdropPath = in.readString();
-        this.mTitle = in.readString();
-    }
-
-    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
-        public Movie createFromParcel(Parcel source) {
-            return new Movie(source);
-        }
-
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
 }

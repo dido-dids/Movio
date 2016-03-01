@@ -32,11 +32,25 @@ public class MovieDetailFragment extends Fragment {
 
         Movie movie = getArguments().getParcelable("Movie");
         TextView title = (TextView) view.findViewById(R.id.title);
+        TextView date = (TextView) view.findViewById(R.id.release_date);
+
         if (movie != null) {
             title.setText("" + movie.getTitle());
+            date.setText("" + movie.getReleaseDate());
 
             ImageView cover = (ImageView) view.findViewById(R.id.cover);
-            Picasso.with(getActivity()).load(TheMovieDBApi.IMAGES_URL + movie.getCoverPath()).into(cover);
+            ImageView backdrop = (ImageView) view.findViewById(R.id.backgroundImage);
+
+            Picasso.with(getActivity())
+                    .load(TheMovieDBApi.IMAGES_URL + movie.getCoverPath())
+                    .fit()
+                    .centerCrop()
+                    .into(cover);
+
+            Picasso.with(getActivity()).load(TheMovieDBApi.IMAGES_URL + movie.getBackdropPath())
+                    .fit()
+                    .centerCrop()
+                    .into(backdrop);
         }
         return view;
     }

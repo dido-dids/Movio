@@ -6,4 +6,6 @@
     <string name="notification_error_title">Download error</string>
     <string name="notification_error_text">Movies couldn\'t be downloaded.</string>
     <string name="section_label_popular">Popular</string>
+    <string name="favorites">Favorites</string>
+    <string name="update">update</string>
 </resources>
