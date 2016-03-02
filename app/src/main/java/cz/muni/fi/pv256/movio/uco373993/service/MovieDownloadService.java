@@ -81,6 +81,7 @@ public class MovieDownloadService extends IntentService {
         Notification notif = new NotificationCompat.Builder(this)
                 .setContentTitle(getString(notification_error_title))
                 .setContentText(getString(notification_error_text))
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)
                 .build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notif);

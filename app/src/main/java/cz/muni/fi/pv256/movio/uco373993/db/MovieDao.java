@@ -77,7 +77,6 @@ public class MovieDao {
 
             return true;
         } catch (SQLException e) {
-            Log.e(TAG, "deleting audio items failed", e);
             return false;
         }
     }

@@ -151,9 +151,9 @@ public class Movie implements Parcelable {
     public int hashCode() {
         int result = mBackdropPath != null ? mBackdropPath.hashCode() : 0;
         result = 31 * result + id.hashCode();
-        result = 31 * result + (mReleaseDate != null ? mReleaseDate.hashCode() : 0);
-        result = 31 * result + (mCoverPath != null ? mCoverPath.hashCode() : 0);
-        result = 31 * result + (mTitle != null ? mTitle.hashCode() : 0);
+        result = 45 * result + (mReleaseDate != null ? mReleaseDate.hashCode() : 0);
+        result = 64 * result + (mCoverPath != null ? mCoverPath.hashCode() : 0);
+        result = 72 * result + (mTitle != null ? mTitle.hashCode() : 0);
         return result;
     }
 }

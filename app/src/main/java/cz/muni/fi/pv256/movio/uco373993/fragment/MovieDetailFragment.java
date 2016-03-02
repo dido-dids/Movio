@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import cz.muni.fi.pv256.movio.uco373993.R;
 import cz.muni.fi.pv256.movio.uco373993.db.MovieDao;
 import cz.muni.fi.pv256.movio.uco373993.model.Movie;
-import cz.muni.fi.pv256.movio.uco373993.R;
 import cz.muni.fi.pv256.movio.uco373993.service.TheMovieDBApi;
 
 
@@ -73,7 +73,8 @@ public class MovieDetailFragment extends Fragment {
                     .centerCrop()
                     .into(cover);
 
-            Picasso.with(getActivity()).load(TheMovieDBApi.IMAGES_URL + movie.getBackdropPath())
+            Picasso.with(getActivity())
+                    .load(TheMovieDBApi.IMAGES_URL + movie.getBackdropPath())
                     .fit()
                     .centerCrop()
                     .into(backdrop);

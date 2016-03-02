@@ -146,7 +146,7 @@ public class UpdaterSyncAdapter extends AbstractThreadedSyncAdapter {
         Notification notif = new NotificationCompat.Builder(getContext())
                 .setContentTitle(title)
                 .setContentText("Movie update.")
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)
                 .build();
         NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id.intValue(), notif);
