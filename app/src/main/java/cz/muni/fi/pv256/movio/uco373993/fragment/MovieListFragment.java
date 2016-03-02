@@ -37,6 +37,7 @@ import cz.muni.fi.pv256.movio.uco373993.R;
 import cz.muni.fi.pv256.movio.uco373993.db.MovieAsyncTaskLoader;
 import cz.muni.fi.pv256.movio.uco373993.model.Movie;
 import cz.muni.fi.pv256.movio.uco373993.service.MovieDownloadService;
+import cz.muni.fi.pv256.movio.uco373993.sync.UpdaterSyncAdapter;
 
 
 /**
@@ -147,6 +148,15 @@ public class MovieListFragment extends Fragment implements CompoundButton.OnChec
         MenuItem item = menu.findItem(R.id.favoriteSwitcher);
         SwitchCompat switchCompat = (SwitchCompat) MenuItemCompat.getActionView(item);
         switchCompat.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.update_wheel) {
+            UpdaterSyncAdapter.syncImmediately(getActivity());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private boolean isNetworkAvailable() {

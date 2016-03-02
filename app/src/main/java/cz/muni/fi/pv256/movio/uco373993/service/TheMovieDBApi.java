@@ -1,9 +1,9 @@
 package cz.muni.fi.pv256.movio.uco373993.service;
 
 import cz.muni.fi.pv256.movio.uco373993.model.Movie;
-
 import retrofit.Call;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -23,4 +23,7 @@ public interface TheMovieDBApi {
             @Query(QUERY_PARAM_API_KEY) String apiKey,
             @Query(QUERY_PARAM_SORT_BY) String sortBy
     );
+
+    @GET("/3/movie/{id}")
+    Call<Movie> loadMovie(@Path("id") Long id, @Query(QUERY_PARAM_API_KEY) String apiKey);
 }

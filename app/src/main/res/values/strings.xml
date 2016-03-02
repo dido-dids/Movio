@@ -7,4 +7,6 @@
     <string name="section_label_popular">Popular movies</string>
     <string name="favorites">Favorites</string>
     <string name="update">update</string>
+    <string name="content_authority">cz.muni.fi.pv256.movio.uco373993</string>
+    <string name="sync_account_type">movio user</string>
 </resources>
