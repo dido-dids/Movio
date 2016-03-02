@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SwitchCompat;
@@ -32,6 +34,7 @@ import java.util.List;
 import cz.muni.fi.pv256.movio.uco373993.MovieAdapter;
 import cz.muni.fi.pv256.movio.uco373993.MovieLoader;
 import cz.muni.fi.pv256.movio.uco373993.R;
+import cz.muni.fi.pv256.movio.uco373993.db.MovieAsyncTaskLoader;
 import cz.muni.fi.pv256.movio.uco373993.model.Movie;
 import cz.muni.fi.pv256.movio.uco373993.service.MovieDownloadService;
 
@@ -39,7 +42,8 @@ import cz.muni.fi.pv256.movio.uco373993.service.MovieDownloadService;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class MovieListFragment extends Fragment implements CompoundButton.OnCheckedChangeListener,
+        LoaderManager.LoaderCallbacks<List<Movie>> {
 
     public List<Movie> mMovies = new ArrayList<>(20);
     private StickyGridHeadersGridView mGridView;
@@ -107,6 +111,22 @@ public class MovieListFragment extends Fragment implements CompoundButton.OnChec
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getLoaderManager().getLoader(0) == null) {
+            getLoaderManager().initLoader(0, null, this);
+        } else {
+            getLoaderManager().restartLoader(0, null, this);
+        }
+    }
+
+    @Override
     public void onStart() {
         Log.d("MovieListFragment", "onStart() called");
         super.onStart();
@@ -138,6 +158,26 @@ public class MovieListFragment extends Fragment implements CompoundButton.OnChec
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            mGridView.setAdapter(new MovieAdapter(getActivity(), R.layout.grid_view_row, mMovies));
+        } else {
+            mGridView.setAdapter(new MovieAdapter(getActivity(), R.layout.grid_view_row, MovieLoader.getInstance().getMovies()));
+        }
+    }
+
+    @Override
+    public Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
+        return new MovieAsyncTaskLoader(getActivity());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
+        mMovies.clear();
+        mMovies = data;
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Movie>> loader) {
 
     }
 

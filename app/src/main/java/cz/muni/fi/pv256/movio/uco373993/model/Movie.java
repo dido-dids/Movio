@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +14,7 @@ import java.util.Date;
 /**
  * Created by David Boron on 15.10.2015.
  */
+@DatabaseTable(tableName = "movies")
 public class Movie implements Parcelable {
 
 
@@ -24,14 +27,19 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+    @DatabaseField
     @SerializedName("backdrop_path")
     private String mBackdropPath;
+    @DatabaseField(id = true)
     @SerializedName("id")
-    private long id;
+    private Long id;
+    @DatabaseField
     @SerializedName("release_date")
     private String mReleaseDate;
+    @DatabaseField
     @SerializedName("poster_path")
     private String mCoverPath;
+    @DatabaseField
     @SerializedName("title")
     private String mTitle;
 
@@ -60,11 +68,11 @@ public class Movie implements Parcelable {
         mBackdropPath = backdropPath;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
